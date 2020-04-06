@@ -1,72 +1,62 @@
 window.onload = function () {
   // document.getElementById("audio").play();
-  function getNewQuote() {
+  const getNewQuote = () => {
     fetch("https://got-quotes.herokuapp.com/quotes")
       .then((resp) => resp.json())
       .then((data) => renderQuotes(data));
     setTimeout(getNewQuote, 5000);
-  }
-  function renderQuotes(GOTData) {
+  };
+  const renderQuotes = (GOTData) => {
     if (GOTData.quote.length < 90) {
-      console.log(document.querySelector("#quote"));
       document.querySelector("#quote").innerHTML =
         GOTData.quote + " -- " + GOTData.character;
     }
-  }
+  };
   getNewQuote();
 
-  var $start = document.querySelector("#start");
-  $start.onclick = playClick;
-  function playClick(event) {
-    let target = event.currentTarget;
-    target.style.display = "none";
+  const playClick = (event) => {
+    event.currentTarget.style.display = "none";
     document.querySelector("#loading").style.display = "block";
     setTimeout(hide, 2000);
-  }
-  function hide() {
+  };
+  document.querySelector("#start").onclick = playClick;
+
+  const hide = () => {
     document.querySelector("#loading").style.display = "none";
     document.body.style.backgroundImage =
       "url('assets/images/kingsLanding.jpg')";
     document.querySelector("#myNavbar").style.display = "block";
-
+    document.querySelector("#quote").style.display = "none";
     game();
-  }
+  };
   //////////////////////////
   //Game//
-  function game() {
-    var canvas = document.getElementById("canvas"),
-      ctx = canvas.getContext("2d"),
-      cH = (ctx.canvas.height = document.getElementsByTagName(
-        "body"
-      )[0].clientHeight),
-      cW = (ctx.canvas.width = document.getElementsByTagName(
-        "body"
-      )[0].clientWidth);
-    // cH = (ctx.canvas.height = window.innerHeight),
-    // cW = (ctx.canvas.width = window.innerWidth);
-    var player = {
+  const game = () => {
+    const canvas = document.getElementById("canvas"),
+      ctx = canvas.getContext("2d");
+    let cH = (ctx.canvas.height = window.innerHeight),
+      cW = (ctx.canvas.width = window.innerWidth);
+    const obstacles = [];
+    const player = {
       posX: 200,
       posY: 200,
       width: 70,
       height: 79,
       deg: 0,
     };
-    window.addEventListener("keydown", fly, true);
-    canvas.addEventListener("mousemove", mouseRotation);
-    window.addEventListener("resize", update);
-    function update() {
+
+    const update = () => {
       cH = ctx.canvas.height = window.innerHeight;
       cW = ctx.canvas.width = window.innerWidth;
-    }
-    function mouseRotation(e) {
-      let centerX = player.posX + 0.5 * player.width;
-      let centerY = player.posY + 0.5 * player.height;
-      let dx = e.pageX - centerX;
-      let dy = e.pageY - centerY;
+    };
+    const mouseRotation = (e) => {
+      const centerX = player.posX + 0.5 * player.width,
+        centerY = player.posY + 0.5 * player.height,
+        dx = e.pageX - centerX,
+        dy = e.pageY - centerY;
       player.deg = Math.atan2(dy, dx);
-    }
-    function fly(e) {
-      e.preventDefault();
+    };
+    const fly = (e) => {
       if (e.keyCode == 65) {
         console.log("left");
         if (player.posX > 0) player.posX -= 20;
@@ -86,27 +76,96 @@ window.onload = function () {
         console.log(player.posY);
         if (player.posY + player.height < cH) player.posY += 20;
       }
-    }
-    function drogon() {
+    };
+    const drogon = () => {
+      const cx = player.posX + 0.5 * player.width,
+        cy = player.posY + 0.5 * player.height;
       ctx.save();
-      const image = document.getElementById("source");
-      let cx = player.posX + 0.5 * player.width;
-      let cy = player.posY + 0.5 * player.height;
       ctx.translate(cx, cy);
       ctx.rotate(player.deg);
       ctx.translate(-cx, -cy);
-      ctx.drawImage(image, player.posX, player.posY, 150, 150);
+      ctx.drawImage(
+        document.getElementById("source"),
+        player.posX,
+        player.posY,
+        150,
+        150
+      );
       ctx.restore();
-    }
-    function start() {
+    };
+    //utils
+    const random = (from, to) => {
+      return Math.floor(Math.random() * (to - from + 1)) + from;
+    };
+    const newObstacle = () => {
+      let type = random(1, 4),
+        coordsX,
+        coordsY;
+
+      switch (type) {
+        case 1:
+          coordsX = random(0, cW);
+          coordsY = 0 - 150;
+          break;
+        case 2:
+          coordsX = cW + 150;
+          coordsY = random(0, cH);
+          break;
+        case 3:
+          coordsX = random(0, cW);
+          coordsY = cH + 150;
+          break;
+        case 4:
+          coordsX = 0 - 150;
+          coordsY = random(0, cH);
+          break;
+      }
+
+      const obstacle = {
+        width: 134,
+        height: 123,
+        moveY: 0,
+        coordsX: coordsX,
+        coordsY: coordsY,
+        size: random(1, 3),
+        deg: Math.atan2(coordsX - cW / 2, -(coordsY - cH / 2)),
+      };
+      obstacles.push(obstacle);
+    };
+
+    const _obstacles = () => {
+      obstacles.forEach((elm) => {
+        ctx.save();
+        ctx.translate(elm.coordsX, elm.coordsY);
+        ctx.rotate(elm.deg);
+        ctx.drawImage(
+          document.getElementById("dead"),
+          -(elm.width / elm.size) / 2,
+          (elm.moveY += 1 / elm.size),
+          elm.width / elm.size,
+          elm.height / elm.size
+        );
+        ctx.restore();
+      });
+      if (obstacles.length < 10) {
+        newObstacle();
+      }
+    };
+
+    const start = () => {
       ctx.clearRect(0, 0, cW, cH);
       ctx.beginPath();
       drogon();
-    }
-    function init() {
+      _obstacles();
+    };
+    const init = () => {
       window.requestAnimationFrame(init);
       start();
-    }
+    };
     init();
-  }
+
+    window.addEventListener("keydown", fly, true);
+    canvas.addEventListener("mousemove", mouseRotation);
+    window.addEventListener("resize", update);
+  };
 };
