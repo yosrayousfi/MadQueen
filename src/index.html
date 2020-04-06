@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+    rel="stylesheet"
+    type="text/css"
+    href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"
+  />
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="https://fonts.googleapis.com/css?family=Titillium+Web:300"
+  />
+    <link rel="stylesheet" type="text/css" href="./style/style.css" />
+    <script src="./script/index.js"></script>
+  </head>
+  <body>
+    <header>
+      <nav class="main-menu">
+        <ul>
+          <li>
+            <a href="#">
+              <i class="fa fa-home fa-2x"></i>
+              <span class="nav-text">
+                Play/Pause
+              </span>
+            </a>
+          </li>
+          <li class="has-subnav">
+            <a href="#">
+              <i class="fa fa-list fa-2x"></i>
+              <span class="nav-text">
+                Sound
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa fa-bar-chart-o fa-2x"></i>
+              <span class="nav-text">
+                Level
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa fa-font fa-2x"></i>
+              <span class="nav-text">
+                Quotes
+              </span>
+            </a>
+          </li>
+          <li class="has-subnav">
+            <a href="#">
+              <i class="fa fa-laptop fa-2x"></i>
+              <span class="nav-text">
+                Stars Components
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="fa fa-info fa-2x"></i>
+              <span class="nav-text">
+                Help
+              </span>
+            </a>
+          </li>
+        </ul>
+  
+        <ul class="logout">
+          <li>
+            <a href="#">
+              <i class="fa fa-power-off fa-2x"></i>
+              <span class="nav-text">
+                Exit
+              </span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+    </header>
+    <main>
+      <audio id="audio" loop>
+        <source src="./assets/audios/theme-loop.mp3" type="audio/mp3" />
+      </audio>
+      <canvas tabindex='1' id="canvas"> </canvas>
+      <div id="loading" style="display:none;">
+        <img 
+             src="./assets/images/loading2.gif"
+             width="300" height="227">
+      </div>
+      <img
+        class="logo"
+        id="start"
+        src="./assets/images/mad.png"
+        alt="logo game"
+      />
+      <div id="quote"></div>
+      <div style="display:none;">
+        <img id="source"
+             src="./assets/images/dragon.png"
+             width="300" height="227">
+      </div>
+      <div class="bottomnavbar" id="myNavbar" style="display:none;">
+        <a href="#home">  <span class="nav-text">
+          Dragons
+        </span></a>
+        <a href="#news"><a href="#home">  <span class="nav-text">
+          Treasures
+        </span></a>
+        <a href="#news"><a href="#home">  <span class="nav-text">
+          Lives
+        </span></a> 
+        <a href="">
+          <progress max="100" value="80"></progress>
+
+        </a>
+          </div>
+ 
+</div>
+    </main>
+    <footer>
+   
+    </footer>
+  </body>
+</html>
