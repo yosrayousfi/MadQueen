@@ -33,7 +33,8 @@ window.onload = function () {
   //Game//
   const game = () => {
     const canvas = document.getElementById("canvas"),
-      ctx = canvas.getContext("2d");
+      ctx = canvas.getContext("2d"),
+      fireBalls = [];
     let cH = (ctx.canvas.height = window.innerHeight),
       cW = (ctx.canvas.width = window.innerWidth);
     const obstacles = [];
@@ -92,6 +93,7 @@ window.onload = function () {
         150
       );
       ctx.restore();
+      fire();
     };
     //utils
     const random = (from, to) => {
@@ -151,7 +153,33 @@ window.onload = function () {
         newObstacle();
       }
     };
-
+    const fire = () => {
+      for (var i = 0; i < fireBalls.length; i++) {
+        ctx.save();
+        const cx = player.posX + 0.5 * player.width,
+          cy = player.posY + 0.5 * player.height;
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(player.deg);
+        ctx.translate(-cx, -cy);
+        ctx.drawImage(
+          document.getElementById("fire"),
+          player.posX,
+          (fireBalls[i].y -= 20),
+          150,
+          150
+        );
+        ctx.restore();
+      }
+    };
+    const action = () => {
+      var fireBall = {
+        x: player.posX,
+        y: player.posY - 100,
+        deg: player.deg,
+      };
+      fireBalls.push(fireBall);
+    };
     const start = () => {
       ctx.clearRect(0, 0, cW, cH);
       ctx.beginPath();
@@ -163,9 +191,9 @@ window.onload = function () {
       start();
     };
     init();
-
     window.addEventListener("keydown", fly, true);
     canvas.addEventListener("mousemove", mouseRotation);
     window.addEventListener("resize", update);
+    canvas.addEventListener("click", action);
   };
 };
