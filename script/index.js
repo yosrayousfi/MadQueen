@@ -92,8 +92,8 @@ window.onload = function () {
   const hideWelcomeStartGame = () => {
     document.querySelector("#loading").style.display = "none";
     // var body = document.getElementsByTagName("body")[0];
-    // body.style.backgroundImage = "url('assets/images/10-kingsLanding.jpg')";
-    body.style.backgroundImage = "url('assets/images/4-cover.gif')";
+    body.style.backgroundImage = "url('assets/images/10-KingsLanding.jpg')";
+    // body.style.backgroundImage = "url('assets/images/4-cover.gif')";
 
     // document.body.style.backgroundImage.src =
     //   "";
