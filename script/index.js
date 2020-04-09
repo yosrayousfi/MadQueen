@@ -15,7 +15,7 @@ window.onload = function () {
     return sound;
   };
   let body = document.getElementsByTagName("body")[0];
-  body.style.backgroundImage = "url('assets/images/10-KingsLanding.jpg')";
+  body.style.backgroundImage = "url('assets/images/9-throne.png')";
   let aud = document.getElementById("my-audio");
   let soundButton = document.getElementById("sound-button");
   soundButton.addEventListener("click", togglePause);
