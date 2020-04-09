@@ -90,8 +90,11 @@ window.onload = function () {
   document.querySelector("#start").onclick = playClick;
   const hideWelcomeStartGame = () => {
     document.querySelector("#loading").style.display = "none";
-    document.body.style.backgroundImage =
-      "url('assets/images/10-kingsLanding.jpg')";
+    var body = document.getElementsByTagName("body")[0];
+    body.style.backgroundImage = "url(assets/images/10-kingsLanding.jpg)";
+
+    // document.body.style.backgroundImage.src =
+    //   "";
     document.querySelector("#quote").style.display = "none";
     document.getElementById("progressId").style.display = "block";
     // document.getElementById("side-menu").style.display = "block";
