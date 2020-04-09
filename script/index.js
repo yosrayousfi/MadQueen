@@ -14,6 +14,8 @@ window.onload = function () {
     sound.type = audioType;
     return sound;
   };
+  let body = document.getElementsByTagName("body")[0];
+  body.style.backgroundImage = "url('assets/images/4-cover.gif')";
   let aud = document.getElementById("my-audio");
   let soundButton = document.getElementById("sound-button");
   soundButton.addEventListener("click", togglePause);
