@@ -5,7 +5,8 @@ const spriteShip = new Image();
 const draonImg = new Image();
 const fireIma = new Image();
 const queenImg = new Image();
-
+let body = document.getElementsByTagName("body")[0];
+body.style.backgroundImage = "url('assets/images/4-cover.gif')";
 window.onload = function () {
   const createSound = (audioSrc, audioType) => {
     console.log("sound effect");
@@ -14,8 +15,6 @@ window.onload = function () {
     sound.type = audioType;
     return sound;
   };
-  let body = document.getElementsByTagName("body")[0];
-  body.style.backgroundImage = "url('assets/images/4-cover.gif')";
   // body.style.backgroundImage = "url('assets/images/9-throne.png')";
   let aud = document.getElementById("my-audio");
   let soundButton = document.getElementById("sound-button");
