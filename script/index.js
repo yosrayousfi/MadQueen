@@ -5,18 +5,13 @@ const spriteShip = new Image();
 const draonImg = new Image();
 const fireIma = new Image();
 const queenImg = new Image();
-
+const food1 = new Image();
+const food2 = new Image();
+const snow = new Image();
+const nightking = new Image();
 window.onload = function () {
   let body = document.getElementsByTagName("body")[0];
   body.style.backgroundImage = "url('assets/images/4-cover.gif')";
-  const createSound = (audioSrc, audioType) => {
-    console.log("sound effect");
-    var sound = document.createElement("audio");
-    sound.src = audioSrc;
-    sound.type = audioType;
-    return sound;
-  };
-  // body.style.backgroundImage = "url('assets/images/9-throne.png')";
   let aud = document.getElementById("my-audio");
   let soundButton = document.getElementById("sound-button");
   soundButton.addEventListener("click", togglePause);
@@ -44,6 +39,10 @@ window.onload = function () {
   fireIma.src = "assets/images/7-fire.png";
   draonImg.src = "assets/images/8-dragon.png";
   queenImg.src = "assets/images/9-throne.png";
+  food2.src = "assets/images/babyD2.png";
+  food1.src = "assets/images/babyD1.png";
+  snow.src = "assets/images/snow.png";
+  nightking.src = "assets/images/nightking.png";
   const getNewQuote = () => {
     fetch("https://got-quotes.herokuapp.com/quotes")
       .then((resp) => resp.json())
@@ -57,32 +56,6 @@ window.onload = function () {
     }
   };
   getNewQuote();
-  const animate = (faceElm) => {
-    faceElm.animate(
-      [
-        // keyframes
-        { transform: "scale(2,2)" },
-        { transform: "scale(1.5,1.5)" },
-        { transform: "scale(2,2)" },
-      ],
-      {
-        // timing options
-        duration: 1500,
-        iterations: 10,
-      }
-    );
-  };
-  //Todo: re-consider displaying gif
-  const faces = (level) => {
-    const faceElm = document.getElementById("face");
-    if (level > 50) {
-      animate(faceElm);
-    } else {
-      faceElm.src = "assets/images/4-face.png";
-      animate(faceElm);
-    }
-  };
-  // faces(45);
   const playClick = (event) => {
     event.currentTarget.style.display = "none";
     document.querySelector("#loading").style.display = "block";
@@ -91,12 +64,9 @@ window.onload = function () {
   document.querySelector("#start").onclick = playClick;
   const hideWelcomeStartGame = () => {
     document.querySelector("#loading").style.display = "none";
-    // var body = document.getElementsByTagName("body")[0];
     body.style.backgroundImage = "url('assets/images/10-KingsLanding.jpg')";
-    // body.style.backgroundImage = "url('assets/images/4-cover.gif')";
-
-    // document.body.style.backgroundImage.src =
-    //   "";
+    // body.style.backgroundImage =
+    // "url('https://www.ecopetit.cat/wpic/mpic/88-888490_motion-poster-game-of-thrones.gif')";
     document.querySelector("#quote").style.display = "none";
     document.getElementById("progressId").style.display = "block";
     // document.getElementById("side-menu").style.display = "block";
@@ -107,7 +77,7 @@ window.onload = function () {
     document.getElementById("logout-icon").style.display = "block";
     document.getElementById("canvas").style.display = "block";
     document.getElementById("record-icon").style.display = "block";
-
+    document.getElementsByClassName("slideshow")[0].style.display = "block";
     let lifeBar = document.getElementById("progLife");
     const progressBar = document.getElementById("progressBar");
     const levelText = document.getElementById("level-text");
@@ -124,11 +94,10 @@ window.onload = function () {
     const lifeLoss = () => {
       if (playing && !gameOver) {
         if (life > 0) {
-          life -= 5;
+          life -= 1;
           lifeBar.setAttribute("value", life);
           lifeBar.style.setProperty("--value", life + "%");
         } else {
-          console.log("life up");
           timeUp = true;
           gameOver = true;
         }
@@ -313,7 +282,7 @@ window.onload = function () {
                   destroyed += 1;
                   obs.destroyed = true;
                   fireBall.destroyed = true;
-                  if (obs.type == 5) {
+                  if (obs.type == 5 || obs.type == 6) {
                     lifeGain();
                   }
                   progressBar.style.height = destroyed / 3 + "%";
@@ -333,7 +302,7 @@ window.onload = function () {
         ctx.restore();
       };
       const newObstacle = () => {
-        let type = random(1, 5),
+        let type = random(1, 6),
           coordsX,
           coordsY;
         switch (type) {
@@ -357,10 +326,10 @@ window.onload = function () {
             coordsX = 0;
             coordsY = cH;
             break;
-          // case 6:
-          //   coordsX = 200;
-          //   coordsY = cH + 150;
-          //   break;
+          case 6:
+            coordsX = cW + 150;
+            coordsY = 150;
+            break;
         }
         const obstacle = {
           x: 278,
@@ -388,23 +357,51 @@ window.onload = function () {
             ctx.save();
             ctx.translate(obs.coordsX, obs.coordsY);
             ctx.rotate(obs.deg);
-            if (obs.type == 5) {
+
+            if (obs.type == 6) {
               ctx.drawImage(
-                spriteShip,
+                food2,
                 -(obs.width / obs.size) / 2,
-                (obs.moveY += 1 / obs.size),
-                obs.width / obs.size,
-                obs.height / obs.size
-              );
-            } else {
-              ctx.drawImage(
-                spriteArrow,
-                -(obs.width / obs.size) / 2,
-                (obs.moveY += 1 / obs.size),
+                (obs.moveY += 0.2 / obs.size),
                 obs.width / obs.size,
                 obs.height / obs.size
               );
             }
+            if (obs.type == 2) {
+              ctx.drawImage(
+                snow,
+                -(obs.width / obs.size) / 2,
+                (obs.moveY += 0.2 / obs.size),
+                obs.width / obs.size,
+                obs.height / obs.size
+              );
+            }
+            if (obs.type == 4) {
+              ctx.drawImage(
+                nightking,
+                -(obs.width / obs.size) / 2,
+                (obs.moveY += 0.2 / obs.size),
+                obs.width / obs.size,
+                obs.height / obs.size
+              );
+            }
+            if (obs.type == 5) {
+              ctx.drawImage(
+                food1,
+                -(obs.width / obs.size) / 2,
+                (obs.moveY += 0.2 / obs.size),
+                obs.width / obs.size,
+                obs.height / obs.size
+              );
+            }
+            ctx.drawImage(
+              spriteArrow,
+              -(obs.width / obs.size) / 2,
+              (obs.moveY += 0.2 / obs.size),
+              obs.width / obs.size,
+              obs.height / obs.size
+            );
+
             ctx.restore();
             //Real Coords
             obs.realX =
@@ -428,7 +425,7 @@ window.onload = function () {
             explosion(obs);
           }
         });
-        if (obstacles.length - destroyed < 10 + Math.floor(destroyed / 6)) {
+        if (obstacles.length - destroyed < 20 + Math.floor(destroyed / 6)) {
           newObstacle();
         }
       };
