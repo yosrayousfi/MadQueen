@@ -38,9 +38,9 @@ window.onload = function () {
     "https://res.cloudinary.com/dc4stsmlc/image/upload/v1570612478/Codepen/explosion_g9ncyg.png";
   spriteArrow.src = "assets/images/5-Arrow.png";
   spriteShip.src = "assets/images/6-ship.png";
-  fireIma.src = "./assets/images/7-fire.png";
-  draonImg.src = "./assets/images/8-dragon.png";
-  queenImg.src = "./assets/images/9-throne.png";
+  fireIma.src = "assets/images/7-fire.png";
+  draonImg.src = "assets/images/8-dragon.png";
+  queenImg.src = "assets/images/9-throne.png";
   const getNewQuote = () => {
     fetch("https://got-quotes.herokuapp.com/quotes")
       .then((resp) => resp.json())
@@ -75,7 +75,7 @@ window.onload = function () {
     if (level > 50) {
       animate(faceElm);
     } else {
-      faceElm.src = "./assets/images/4-face.png";
+      faceElm.src = "assets/images/4-face.png";
       animate(faceElm);
     }
   };
