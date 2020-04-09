@@ -7,6 +7,31 @@ const fireIma = new Image();
 const queenImg = new Image();
 
 window.onload = function () {
+  const createSound = (audioSrc, audioType) => {
+    console.log("sound effect");
+    var sound = document.createElement("audio");
+    sound.src = audioSrc;
+    sound.type = audioType;
+    return sound;
+  };
+  let aud = document.getElementById("my-audio");
+  let soundButton = document.getElementById("sound-button");
+  soundButton.addEventListener("click", togglePause);
+  var soundText = document.getElementById("sound-text");
+  let paused = true;
+  function togglePause() {
+    if (!paused) {
+      console.log("sound off");
+      paused = true;
+      soundText.innerHTML = "Sound Off";
+      aud.pause();
+    } else if (paused) {
+      console.log("sound on");
+      paused = false;
+      aud.play();
+      soundText.innerHTML = "Sound On";
+    }
+  }
   sprite.src =
     "https://res.cloudinary.com/dc4stsmlc/image/upload/v1570612478/Codepen/sprite_bj90k9.png";
   spriteExplosion.src =
@@ -16,7 +41,6 @@ window.onload = function () {
   fireIma.src = "./assets/images/7-fire.png";
   draonImg.src = "./assets/images/8-dragon.png";
   queenImg.src = "./assets/images/9-throne.png";
-  // document.getElementById("audio").play();
   const getNewQuote = () => {
     fetch("https://got-quotes.herokuapp.com/quotes")
       .then((resp) => resp.json())
@@ -30,7 +54,32 @@ window.onload = function () {
     }
   };
   getNewQuote();
-
+  const animate = (faceElm) => {
+    faceElm.animate(
+      [
+        // keyframes
+        { transform: "scale(2,2)" },
+        { transform: "scale(1.5,1.5)" },
+        { transform: "scale(2,2)" },
+      ],
+      {
+        // timing options
+        duration: 1500,
+        iterations: 10,
+      }
+    );
+  };
+  //Todo: re-consider displaying gif
+  const faces = (level) => {
+    const faceElm = document.getElementById("face");
+    if (level > 50) {
+      animate(faceElm);
+    } else {
+      faceElm.src = "./assets/images/4-face.png";
+      animate(faceElm);
+    }
+  };
+  // faces(45);
   const playClick = (event) => {
     event.currentTarget.style.display = "none";
     document.querySelector("#loading").style.display = "block";
@@ -43,10 +92,19 @@ window.onload = function () {
       "url('assets/images/10-kingsLanding.jpg')";
     document.querySelector("#quote").style.display = "none";
     document.getElementById("progressId").style.display = "block";
-    document.getElementById("directions").style.display = "block";
+    // document.getElementById("side-menu").style.display = "block";
+    // document.getElementById("directions").style.display = "block";
     document.getElementById("navbar").style.display = "block";
+    document.getElementById("play-icon").style.display = "block";
+    document.getElementsByClassName("level-icon")[0].style.display = "block";
+    document.getElementById("logout-icon").style.display = "block";
+    document.getElementById("canvas").style.display = "block";
+    document.getElementById("record-icon").style.display = "block";
+
     let lifeBar = document.getElementById("progLife");
     const progressBar = document.getElementById("progressBar");
+    const levelText = document.getElementById("level-text");
+    const recordText = document.getElementById("record-text");
     let playing = false;
     let life = 100;
     let timeUp = false;
@@ -59,13 +117,16 @@ window.onload = function () {
     const lifeLoss = () => {
       if (playing && !gameOver) {
         if (life > 0) {
-          life--;
+          life -= 5;
           lifeBar.setAttribute("value", life);
           lifeBar.style.setProperty("--value", life + "%");
         } else {
           console.log("life up");
           timeUp = true;
+          gameOver = true;
         }
+      } else if (life == 50) {
+        //display random dany faces
       } else {
         life = 100;
         resetLive();
@@ -74,6 +135,17 @@ window.onload = function () {
         lifeLoss();
       }, 1000);
     };
+    const lifeGain = () => {
+      life += 10;
+      if (life < 100) {
+        lifeBar.setAttribute("value", life);
+        lifeBar.style.setProperty("--value", life + "%");
+      } else {
+        life = 100;
+        resetLive();
+      }
+    };
+
     function game() {
       //Canvas
       const canvas = document.getElementById("canvas");
@@ -84,7 +156,7 @@ window.onload = function () {
       let cH2 = window.innerWidth;
       //Game
       let fireBalls = [],
-        explosions = [],
+        // explosions = [],
         destroyed = 0,
         record = 0,
         count = 0;
@@ -154,7 +226,7 @@ window.onload = function () {
                 count = 0;
                 fireBalls = [];
                 obstacles = [];
-                explosions = [];
+                // explosions = [];
                 destroyed = 0;
                 player.deg = 0;
                 canvas.removeEventListener("contextmenu", action);
@@ -234,7 +306,13 @@ window.onload = function () {
                   destroyed += 1;
                   obs.destroyed = true;
                   fireBall.destroyed = true;
-                  explosions.push(obs);
+                  if (obs.type == 5) {
+                    lifeGain();
+                  }
+                  progressBar.style.height = destroyed / 3 + "%";
+                  progressBar.style.top = 100 - destroyed / 3 + "%";
+                  progressBar.innerText = destroyed + "%";
+                  // explosions.push(obs);
                 }
               }
             });
@@ -401,11 +479,15 @@ window.onload = function () {
           if (playing) {
             _obstacles();
             // ToDo : better display of the record
+            //it is already displayed in progress bar but it should be a % to get to next level
+            // not numbr of distroyed
             ctx.font = "20px Verdana";
             ctx.fillStyle = "white";
             ctx.textBaseline = "middle";
             ctx.textAlign = "left";
+            //change record position to be vesible
             ctx.fillText("Record: " + record + "", cW, 30);
+            recordText.innerHTML = "Record: " + record;
             ctx.font = "40px Verdana";
             ctx.fillStyle = "white";
             ctx.strokeStyle = "black";
@@ -415,10 +497,15 @@ window.onload = function () {
             ctx.fillText("" + destroyed + "", cW2 / 2, cH2 / 2);
             //update progress bar
             //ToDo : extract in fct
-            progressBar.style.height = destroyed + 10 + "%";
-            progressBar.style.top = 100 - (destroyed + 10) + "%";
-            progressBar.innerText = destroyed + "%";
-          } else {
+            let levl = 1;
+
+            if (destroyed >= 100) {
+              levl = 2;
+            } else if (destroyed >= 200) {
+              levl = 3;
+            }
+            levelText.innerHTML = "Level" + levl;
+            // recordText.innerHTML = "Record: " + record;
             // the start icon
             // ctx.drawImage(sprite, 428, 12, 70, 70, cW/2 - 35, cH/2 - 35, 70,70);
           }
@@ -443,6 +530,8 @@ window.onload = function () {
           ctx.fillStyle = "white";
           ctx.textAlign = "center";
           ctx.fillText("RECORD: " + record, cW / 2, cH / 2 + 185);
+          recordText.innerHTML = "Record: " + record;
+
           ctx.drawImage(
             sprite,
             500,

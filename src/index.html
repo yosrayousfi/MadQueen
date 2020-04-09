@@ -1,28 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
     <link
-    rel="stylesheet"
-    type="text/css"
-    href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"
-  />
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+      integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"
+    />
     <link rel="stylesheet" type="text/css" href="./style/style.css" />
     <script src="./script/index.js"></script>
   </head>
-  <body >
+  <body>
     <header>
       <div class="bottomnavbar hide" id="navbar">
-        <a href="#home">  <span class="nav-text">
+        <!-- <a href="#home">  <span class="nav-text">
           Dragons
         </span></a>
         <a href="#news"><a href="#home">  <span class="nav-text">
           Treasures
-        </span></a>
+        </span></a> -->
         <a href="">
           <progress id="progLife" max="100" value="100"></progress>
         </a>
-        <div class="circle hide" id="directions">
+        <!-- <div class="circle hide" id="directions">
           <div class="borderCircle"></div>
           <div class="borderCircle2"></div>
           <div class="borderCircle3"></div>
@@ -30,47 +35,23 @@
               <img src="./assets/images/1-directions.png" alt="" width="100" height="100">
           </div>
           <div class="outerCirlce"></div>
-        </div> 
+        </div>  -->
       </div>
-      <nav class="main-menu">
+      <nav id="side-menu" class="main-menu">
         <ul>
-          <li>
+          <li id="play-icon">
             <a href="#">
-              <i class="fa fa-home fa-2x"></i>
+              <i class="fa fa-play fa-2x"></i>
               <span class="nav-text">
                 Play/Pause
               </span>
             </a>
           </li>
-          <li class="has-subnav">
-            <a href="#">
-              <i class="fa fa-list fa-2x"></i>
-              <span class="nav-text">
+          <li>
+            <a href="#" id="sound-button" @click="togglePause()">
+              <i class="fa fa-music fa-2x"></i>
+              <span class="nav-text" id="sound-text">
                 Sound
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="fa fa-bar-chart-o fa-2x"></i>
-              <span class="nav-text">
-                Level
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="fa fa-font fa-2x"></i>
-              <span class="nav-text">
-                Quotes
-              </span>
-            </a>
-          </li>
-          <li class="has-subnav">
-            <a href="#">
-              <i class="fa fa-laptop fa-2x"></i>
-              <span class="nav-text">
-                Stars Components
               </span>
             </a>
           </li>
@@ -81,16 +62,44 @@
                 Help
               </span>
             </a>
-          </li> 
-        </ul>
-          <div id="progressId" class="progress hide">
-            <div id="progressBar"class="progress-bar" role="progressbar" style="" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
-             
-          </div>
-     </div> 
-        <ul class="logout">
-          <li>
+          </li>
+          <li class="level-icon" style="margin-top: 20%; display: none;">
             <a href="#">
+              <i class="fa fa-star-half-o fa-2x" aria-hidden="true"></i>
+              <span class="nav-text" id="level-text">
+                Level
+              </span>
+            </a>
+          </li>
+          <li id="record-icon" style="display: none;">
+            <a href="#">
+              <i class="fa fa-level-up fa-2x"></i>
+              <span class="nav-text" id="record-text">
+                Record
+              </span>
+            </a>
+          </li>
+        </ul>
+        <!-- <div >
+          <img id="face"
+               src="./assets/images/2-face.png"
+               width="100" height="100">
+        </div> -->
+        <div id="progressId" class="progress hide">
+          <div
+            id="progressBar"
+            class="progress-bar"
+            role="progressbar"
+            style=""
+            aria-valuenow="80"
+            aria-valuemin="0"
+            aria-valuemax="150"
+          ></div>
+        </div>
+
+        <ul id="logout-icon" class="logout">
+          <li>
+            <a href="#" onclick="location.reload();">
               <i class="fa fa-power-off fa-2x"></i>
               <span class="nav-text">
                 Exit
@@ -101,19 +110,21 @@
       </nav>
     </header>
     <main>
-      <audio id="audio" loop>
+      <audio id="my-audio" loop>
         <source src="./assets/audios/theme-loop.mp3" type="audio/mp3" />
       </audio>
-      <canvas id="canvas"> </canvas>
+      <canvas id="canvas" class="hide"> </canvas>
       <div id="loading">
-        <img 
-             src="./assets/images/2-loading.gif"
-             width="300" height="227">
+        <img src="./assets/images/2-loading.gif" width="300" height="227" />
       </div>
-    <img class="logo"id="start" src="./assets/images/3-logo.png"alt="logo game"/>
+      <img
+        class="logo"
+        id="start"
+        src="./assets/images/3-logo.png"
+        alt="logo game"
+      />
       <div id="quote"></div>
     </main>
-    <footer>
-    </footer>
+    <footer></footer>
   </body>
 </html>
