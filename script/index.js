@@ -13,6 +13,7 @@ window.onload = function () {
   let body = document.getElementsByTagName("body")[0];
   body.style.backgroundImage = "url('assets/images/4-cover.gif')";
   let aud = document.getElementById("my-audio");
+  let effect = document.getElementById("audio2");
   let soundButton = document.getElementById("sound-button");
   soundButton.addEventListener("click", togglePause);
   var soundText = document.getElementById("sound-text");
@@ -38,7 +39,7 @@ window.onload = function () {
   spriteShip.src = "assets/images/6-ship.png";
   fireIma.src = "assets/images/7-fire.png";
   draonImg.src = "assets/images/8-dragon.png";
-  queenImg.src = "assets/images/9-throne.png";
+  queenImg.src = "assets/images/10-throne.png";
   food2.src = "assets/images/babyD2.png";
   food1.src = "assets/images/babyD1.png";
   snow.src = "assets/images/snow.png";
@@ -87,6 +88,15 @@ window.onload = function () {
     let timeUp = false;
     let gameOver = false;
     let obstacles = [];
+    let reason = "";
+    function togglePlay() {
+      if (playing) {
+        playing = false;
+      }
+    }
+    let playButton = document.getElementById("play-button");
+    playButton.addEventListener("click", togglePlay);
+
     const resetLive = () => {
       lifeBar.setAttribute("value", life);
       lifeBar.style.setProperty("--value", life + "%");
@@ -100,6 +110,7 @@ window.onload = function () {
         } else {
           timeUp = true;
           gameOver = true;
+          reason = "TIME'S UP!";
         }
       } else if (life == 50) {
         //display random dany faces
@@ -135,7 +146,8 @@ window.onload = function () {
         // explosions = [],
         destroyed = 0,
         record = 0,
-        count = 0;
+        count = 0,
+        _shield = { deg: 0 };
       //Player
       const player = {
         posX: -35,
@@ -148,21 +160,22 @@ window.onload = function () {
         //to do: verification
         e.preventDefault();
         if (e.keyCode == 65) {
-          console.log("left");
+          // console.log("left");
           if (cW2 > player.width + 120) cW2 -= 20;
         }
         if (e.keyCode == 87) {
-          console.log("up");
+          // console.log("up");
           if (cH2 > player.height + 120) cH2 -= 20;
         }
         if (e.keyCode == 68) {
-          console.log("right");
+          // console.log("right");
           if (cW2 < cW * 2 - player.width - 120) cW2 += 20;
         }
         if (e.keyCode == 83) {
           // if (cH2 < cW * 2 - player.height - 120)
           cH2 += 20;
         }
+        effect.play();
       };
       const update = () => {
         cH = ctx.canvas.height = window.innerHeight;
@@ -297,7 +310,7 @@ window.onload = function () {
       };
       const madQueen = () => {
         ctx.save();
-        ctx.translate(cW / 2 + 10, cH / 2 + 10);
+        ctx.translate(cW / 2, cH / 2);
         ctx.drawImage(queenImg, -100, -100, 200, 200);
         ctx.restore();
       };
@@ -352,6 +365,7 @@ window.onload = function () {
       };
       const _obstacles = () => {
         let distance;
+        let distanceFromQueen;
         obstacles.forEach((obs) => {
           if (!obs.destroyed) {
             ctx.save();
@@ -416,9 +430,19 @@ window.onload = function () {
               Math.pow(obs.realX - cW2 / 2, 2) +
                 Math.pow(obs.realY - cH2 / 2, 2)
             );
-            if (distance < obs.width / obs.size / 2 - 4 + 100) {
+            distanceFromQueen = Math.sqrt(
+              Math.pow(obs.realX - cW / 2, 2) + Math.pow(obs.realY - cH / 2, 2)
+            );
+            if (distanceFromQueen < obs.width / obs.size / 2 - 4 + 30) {
               gameOver = true;
               playing = false;
+              reason = "QUEEN IS DEAD...AGAIN!";
+              canvas.addEventListener("mousemove", action);
+            }
+            if (distance < obs.width / obs.size / 2 - 4 + 50) {
+              gameOver = true;
+              playing = false;
+              reason = "DRONGON IS DEAD!";
               canvas.addEventListener("mousemove", action);
             }
           } else if (!obs.extinct) {
@@ -524,7 +548,7 @@ window.onload = function () {
           ctx.font = "60px Verdana";
           ctx.fillStyle = "white";
           ctx.textAlign = "center";
-          ctx.fillText("GAME OVER", cW / 2, cH / 2 - 150);
+          ctx.fillText(reason, cW / 2, cH / 2 - 150);
           ctx.font = "20px Verdana";
           ctx.fillStyle = "white";
           ctx.textAlign = "center";
