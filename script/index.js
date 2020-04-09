@@ -15,7 +15,7 @@ window.onload = function () {
     return sound;
   };
   let body = document.getElementsByTagName("body")[0];
-  body.style.backgroundImage = "url('assets/images/4-cover.gif')";
+  // body.style.backgroundImage = "url('assets/images/4-cover.gif')";
   let aud = document.getElementById("my-audio");
   let soundButton = document.getElementById("sound-button");
   soundButton.addEventListener("click", togglePause);
@@ -90,8 +90,9 @@ window.onload = function () {
   document.querySelector("#start").onclick = playClick;
   const hideWelcomeStartGame = () => {
     document.querySelector("#loading").style.display = "none";
-    var body = document.getElementsByTagName("body")[0];
-    body.style.backgroundImage = "url('assets/images/10-kingsLanding.jpg')";
+    // var body = document.getElementsByTagName("body")[0];
+    // body.style.backgroundImage = "url('assets/images/10-kingsLanding.jpg')";
+    body.style.backgroundImage = "url('assets/images/4-cover.gif')";
 
     // document.body.style.backgroundImage.src =
     //   "";
