@@ -5,10 +5,10 @@ const spriteShip = new Image();
 const draonImg = new Image();
 const fireIma = new Image();
 const queenImg = new Image();
-let body = document.getElementsByTagName("body")[0];
-body.style.backgroundImage = "url('assets/images/4-cover.gif')";
+
 window.onload = function () {
   let body = document.getElementsByTagName("body")[0];
+  body.style.backgroundImage = "url('assets/images/4-cover.gif')";
   const createSound = (audioSrc, audioType) => {
     console.log("sound effect");
     var sound = document.createElement("audio");
