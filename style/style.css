@@ -627,3 +627,13 @@ animated background */
 .no-cssanimations .slideshow li span {
   opacity: 1;
 }
+.full-screen {
+  position: fixed;
+  width: 35px;
+  height: 35px;
+  background: url(https://res.cloudinary.com/dc4stsmlc/image/upload/v1570612477/Codepen/full-screen_szgnei.png) no-repeat;
+  z-index: 10;
+  display: block;
+  right: 10px;
+  bottom: 10px;
+}

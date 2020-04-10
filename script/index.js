@@ -19,6 +19,7 @@ window.onload = function () {
   var soundText = document.getElementById("sound-text");
   let paused = true;
   function togglePause() {
+    console.log("togglePause()");
     if (!paused) {
       console.log("sound off");
       paused = true;
@@ -31,6 +32,33 @@ window.onload = function () {
       soundText.innerHTML = "Sound On";
     }
   }
+  var elem = document.documentElement;
+
+  let fullButton = document.getElementById("full-button");
+  fullButton.addEventListener("click", full);
+  let fullScreen = false;
+  function full() {
+    if (!fullScreen) {
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.mozRequestFullScreen) {
+        /* Firefox */
+        elem.mozRequestFullScreen();
+      } else if (elem.webkitRequestFullscreen) {
+        /* Chrome, Safari and Opera */
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) {
+        /* IE/Edge */
+        elem.msRequestFullscreen();
+      }
+      fullScreen = true;
+    } else {
+      console.log("exit full screen");
+      document.exitFullscreen();
+      fullScreen = false;
+    }
+  }
+
   sprite.src =
     "https://res.cloudinary.com/dc4stsmlc/image/upload/v1570612478/Codepen/sprite_bj90k9.png";
   spriteExplosion.src =

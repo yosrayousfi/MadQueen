@@ -46,6 +46,7 @@
           <progress id="progLife" max="100" value="100"></progress>
         </a>
       </div>
+      <!-- <a class="full-screen" target="_blank" id="full-button"  @click="full()>"</a> -->
       <nav id="side-menu" class="main-menu">
         <ul>
           <li id="play-icon">
@@ -53,6 +54,22 @@
               <i class="fa fa-play fa-2x"></i>
               <span class="nav-text">
                 Play/Pause
+              </span>
+            </a>
+          </li>
+          <!-- <li>
+            <a href="#" id="full-button" @click="togglePause()">
+              <i class="fa fa-arrows-alt fa-2x"></i>
+              <span class="nav-text">
+                Full Screen
+              </span>
+            </a>
+          </li> -->
+          <li>
+            <a href="#" id="full-button" @click="full()">
+              <i class="fa fa-arrows-alt fa-2x"></i>
+              <span class="nav-text">
+                Full Screen
               </span>
             </a>
           </li>
@@ -122,6 +139,7 @@
         <source src="assets/audios/wings.mp3" type="audio/mp3" />
       </audio>
       <canvas id="canvas" class="hide"> </canvas>
+
       <div id="loading">
         <img src="assets/images/2-loading.gif" width="300" height="227" />
       </div>
