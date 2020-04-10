@@ -13,8 +13,8 @@ body {
 bottom bar  => now moved up*/
 
 .bottomnavbar {
-  margin-left: 200px;
-  margin-right: 200px;
+  margin-left: 50px;
+  margin-top: 0;
   float: center;
   overflow: hidden;
   position: fixed;
@@ -24,12 +24,11 @@ bottom bar  => now moved up*/
   background: transparent;
 }
 .bottomnavbar a {
-  float: center;
   display: block;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-
+  float: right;
   border-collapse: collapse;
   border-spacing: 0;
   color: #999;
@@ -69,8 +68,9 @@ bottom bar  => now moved up*/
   width: 100px;
   height: 100px;
   /* position: relative; */
+  /* margin-left: 100px;
+  margin-top: 30px; */
   margin-left: 100px;
-  margin-top: 30px;
   cursor: pointer;
   user-select: none;
   border-radius: 110px;
@@ -317,6 +317,21 @@ nav.main-menu li.active > a,
   margin-right: 100px;
   margin-top: 100px;
 }
+#howPlay {
+  font-style: italic;
+  text-align: left;
+  color: rgb(210, 180, 140, 0.7);
+  /* margin-bottom: 40px;
+  margin-right: 100px;
+  margin-top: 100px; */
+}
+.instruction-box {
+  border: 1px dashed white;
+  border-radius: 15px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
 #instructions {
   font-style: italic;
   font-size: 20px;

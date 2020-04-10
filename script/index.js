@@ -93,12 +93,15 @@ window.onload = function () {
   document.querySelector("#start").onclick = playClick;
   const hideWelcomeStartGame = () => {
     document.querySelector("#loading").style.display = "none";
-    body.style.backgroundImage = "url('assets/images/10-KingsLanding.jpg')";
+    document.body.style.backgroundImage =
+      "url('assets/images/10-kingsLanding.jpg')";
+    // body.style.backgroundColor = "black";
     // body.style.backgroundImage =
     // "url('https://www.ecopetit.cat/wpic/mpic/88-888490_motion-poster-game-of-thrones.gif')";
     document.querySelector("#quote").style.display = "none";
     document.querySelector("#instructions").style.display = "none";
     document.getElementById("progressId").style.display = "block";
+    document.getElementById("directions").style.display = "block";
     // document.getElementById("side-menu").style.display = "block";
     // document.getElementById("directions").style.display = "block";
     document.getElementById("navbar").style.display = "block";
@@ -108,6 +111,8 @@ window.onload = function () {
     document.getElementById("canvas").style.display = "block";
     document.getElementById("record-icon").style.display = "block";
     document.getElementsByClassName("slideshow")[0].style.display = "block";
+    // document.getElementsByClassName("instruction-box")[0].style.display =
+    //   "block";
     let lifeBar = document.getElementById("progLife");
     const progressBar = document.getElementById("progressBar");
     const levelText = document.getElementById("level-text");
