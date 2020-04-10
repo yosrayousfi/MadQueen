@@ -259,7 +259,7 @@ nav.main-menu li.active > a,
 .dropdown-menu > .active > a:focus,
 .no-touch .dashboard-page nav.dashboard-menu ul li:hover a,
 .dashboard-page nav.dashboard-menu ul li.active a {
-  color: rgb(210, 180, 140);
+  color: white;
   background-color: rgb(95, 162, 219, 0.4);
   transform: scale(1.2);
   box-shadow: 2px 2px 7px 1px #44d3e6;
@@ -631,7 +631,8 @@ animated background */
   position: fixed;
   width: 35px;
   height: 35px;
-  background: url(https://res.cloudinary.com/dc4stsmlc/image/upload/v1570612477/Codepen/full-screen_szgnei.png) no-repeat;
+  background: url(https://res.cloudinary.com/dc4stsmlc/image/upload/v1570612477/Codepen/full-screen_szgnei.png)
+    no-repeat;
   z-index: 10;
   display: block;
   right: 10px;
