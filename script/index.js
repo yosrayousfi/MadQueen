@@ -97,6 +97,7 @@ window.onload = function () {
     // body.style.backgroundImage =
     // "url('https://www.ecopetit.cat/wpic/mpic/88-888490_motion-poster-game-of-thrones.gif')";
     document.querySelector("#quote").style.display = "none";
+    document.querySelector("#instructions").style.display = "none";
     document.getElementById("progressId").style.display = "block";
     // document.getElementById("side-menu").style.display = "block";
     // document.getElementById("directions").style.display = "block";

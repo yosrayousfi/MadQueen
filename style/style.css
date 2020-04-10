@@ -33,7 +33,7 @@ bottom bar  => now moved up*/
   border-collapse: collapse;
   border-spacing: 0;
   color: #999;
-  font-family: arial;
+  /* font-family: arial; */
   font-size: 14px;
 }
 
@@ -270,14 +270,14 @@ nav.main-menu li.active > a,
   width: 100%;
   height: 100%;
 } */
-@font-face {
+/* @font-face {
   font-family: "Titillium Web";
   font-style: normal;
   font-weight: 300;
   src: local("Titillium WebLight"), local("TitilliumWeb-Light"),
     url(https://themes.googleusercontent.com/static/fonts/titilliumweb/v2/anMUvcNT0H1YN4FII8wpr24bNCNEoFTpS2BTjF6FB5E.woff)
       format("woff");
-}
+} */
 /* canvas */
 #canvas {
   background-size: cover;
@@ -313,9 +313,21 @@ nav.main-menu li.active > a,
   font-size: 20px;
   text-align: center;
   color: rgb(210, 180, 140, 0.7);
-  margin-top: 12px;
+  margin-bottom: 40px;
+  margin-right: 100px;
+  margin-top: 100px;
 }
-
+#instructions {
+  font-style: italic;
+  font-size: 20px;
+  text-align: center;
+  color: rgb(210, 180, 140, 0.7);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  position: fixed;
+  margin-top: 30px;
+}
 main {
   min-height: 90%;
   justify-content: flex-end;
